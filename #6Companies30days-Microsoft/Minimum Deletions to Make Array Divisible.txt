@@ -1,0 +1,26 @@
+int minOperations(vector<int>& nums, vector<int>& numsDivide) {
+        int n=numsDivide.size();
+        int gcd1=numsDivide[0];
+       for(int i=1;i<n;i++)
+       {
+         gcd1=__gcd(gcd1,numsDivide[i]);
+       }
+       priority_queue<int,vector<int>,greater<int>>pq;
+       for(int i=0;i<nums.size();i++)
+       {
+          pq.push(nums[i]); 
+       }
+       int c=0;
+       while(pq.size()>0)
+       {
+           if(pq.top()==gcd1||gcd1%pq.top()==0)
+           return c;
+           else
+           {
+               pq.pop();
+               c++;
+           }
+       }
+       return -1;
+
+    }
