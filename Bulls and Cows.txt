@@ -1,0 +1,31 @@
+ string getHint(string secret, string guess) {
+        int c1=0,c2=0;
+        int n=secret.length();
+        unordered_map<char,int>mp;
+        for(auto&it:secret)
+            mp[it]++;
+        for(int i=0;i<n;i++)
+        {
+            if(secret[i]==guess[i])
+            {
+                c1++;
+                mp[secret[i]]--;
+                if(mp[secret[i]]==0)
+                    mp.erase(secret[i]);
+            }
+        }
+        for(int i=0;i<n;i++)
+        {
+            if(mp.count(guess[i]))
+            {
+                if(guess[i]!=secret[i]){
+                    mp[guess[i]]--;
+                    if(mp[guess[i]]==0)
+                        mp.erase(guess[i]);
+                    c2++;}
+            }
+        }
+        string ans=to_string(c1)+"A"+to_string(c2)+"B";
+        return ans;
+        
+    }
