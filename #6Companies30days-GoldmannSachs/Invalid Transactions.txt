@@ -1,0 +1,77 @@
+class Solution {
+public:
+static bool cmp(vector<string>&a,vector<string>&b)
+{
+    int s1=stoi(a[1]);
+    int s2=stoi(b[1]);
+    return s1<s2;
+}
+    vector<string> invalidTransactions(vector<string>& transactions) {
+       int n=transactions.size();
+       vector<vector<string>>v(n,vector<string>(4));
+       vector<string>ans;
+       vector<int>visited(n,0);
+       int j=0;
+       for(auto&it:transactions)
+       {
+           string str=it;
+           string s;
+           int k=0;
+           for(int i=0;i<str.size();i++)
+           {
+
+               if(str[i]==',')
+               {
+                   v[j][k]=s;
+                   s="";
+                   k++;
+
+               }
+               else
+               s+=str[i];
+           }
+           v[j][k]=s;
+           j++;
+           
+       }
+       sort(v.begin(),v.end(),cmp);
+       for(int i=0;i<n;i++)
+       {
+           string s=v[i][2];
+           int x=stoi(s);
+           if(x>1000)
+           visited[i]=1;  
+           int y=stoi(v[i][1]);
+           for(int j=i+1;j<n;j++)
+           {
+                string s1=v[j][0];
+                string s2=v[j][1];
+                int time=stoi(s2);
+                string s3=v[j][3];
+                if(s1==v[i][0]&&time<=stoi(v[i][1])+60&&s3!=v[i][3]){
+                visited[j]=1; 
+                visited[i]=1;}
+           }
+       }
+    
+       for(int i=0;i<n;i++)
+       {
+           if(visited[i]==1)
+           {
+               auto x=v[i];
+               string temp="";
+               for(int j=0;j<x.size();j++)
+               {
+                   string q=x[j];
+                   temp+=q;
+                   temp.push_back(',');
+               }
+               temp.pop_back();
+               ans.push_back(temp);
+           }
+           
+       }
+       return ans;
+
+    }
+};
