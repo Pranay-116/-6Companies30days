@@ -1,0 +1,54 @@
+class StockPrice {
+public:
+#define pii pair<int,int>
+unordered_map<int,int>mp1;
+map<int,int>mp2;
+pii temp={0,0};
+    StockPrice() {
+        
+    }
+    
+    void update(int timestamp, int price) {
+       if(mp1.count(timestamp))
+       {
+           int x=mp1[timestamp];
+           mp2[x]--;
+           if(mp2[x]==0)
+           {
+               mp2.erase(x);
+           }
+           mp1[timestamp]=price;
+           mp2[price]++;
+       }
+       else{
+       mp1[timestamp]=price;
+       mp2[price]++;}
+      if(temp.first<=timestamp)
+      {
+          temp={timestamp,price};
+      }
+    }
+    
+    int current() {
+        return temp.second;
+    }
+    
+    int maximum() {
+        auto it=mp2.rbegin();
+        return it->first;
+    }
+    
+    int minimum() {
+            auto it=mp2.begin();
+        return it->first;
+    }
+};
+
+/**
+ * Your StockPrice object will be instantiated and called as such:
+ * StockPrice* obj = new StockPrice();
+ * obj->update(timestamp,price);
+ * int param_2 = obj->current();
+ * int param_3 = obj->maximum();
+ * int param_4 = obj->minimum();
+ */nv

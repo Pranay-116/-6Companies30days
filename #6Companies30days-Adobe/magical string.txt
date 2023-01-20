@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int magicalString(int n) {
+        string s="122";
+        int i=2;
+        while(i<n&&s.size()<n)
+        {
+            if(s[i]=='1')
+            {
+                if(s[s.size()-1]=='1')
+                s+='2';
+                else
+                s+='1';
+            }
+            else
+            {
+                if(s[s.size()-1]=='2')
+                s+="11";
+                else
+                s+="22";
+            }
+            i++;
+        }
+        int c=0;
+        i=0;
+        while(i<n)
+        {
+            if(s[i]=='1')
+            c++;
+            i++;
+        }
+        return c;
+        
+    }
+};

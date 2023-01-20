@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int numMatchingSubseq(string s, vector<string>& words) {
+        vector<vector<int>>map(26);
+        for(int i=0;i<s.size();i++)
+        {
+            map[s[i]-'a'].push_back(i);
+        }
+        int count=0;
+        for(int i=0;i<words.size();i++)
+        {
+            bool f=1;
+            int lastIndex=-1;
+            for(char w:words[i])
+            {
+                auto it=upper_bound(map[w-'a'].begin(),map[w-'a'].end(),lastIndex);
+                if(it==map[w-'a'].end())
+                {
+                    f=0;
+                    break;
+                }
+                else
+                {
+                    lastIndex=*it;
+                }
+            }
+            if(f==1)
+            {
+                count++;
+            }
+        }
+        return count;
+        
+    }
+};

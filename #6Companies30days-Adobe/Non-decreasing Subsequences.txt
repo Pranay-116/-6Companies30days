@@ -1,0 +1,32 @@
+class Solution {
+public:
+void f(int idx,int n,vector<int>&nums,vector<int>&res,set<vector<int>>&st)
+{
+    if(idx==n)
+    {
+        if(res.size()>=2)
+        {
+            st.insert(res);
+        }
+        return;
+    }
+    if(res.size()==0||res.back()<=nums[idx])
+    {
+        res.push_back(nums[idx]);
+        f(idx+1,n,nums,res,st);
+        res.pop_back();
+    }
+//take and non -take we can non-take in both option but take only when above if condition statisfies
+    f(idx+1,n,nums,res,st);
+ //   return;
+}
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        set<vector<int>>st;
+        vector<int>res;
+        int n=nums.size();
+        f(0,n,nums,res,st);
+        vector<vector<int>>ans(st.begin(),st.end());
+        return ans;
+        
+    }
+};
