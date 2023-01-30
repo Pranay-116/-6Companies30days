@@ -1,0 +1,48 @@
+class Solution {
+public:
+using pip=pair<int,pair<int,int>>;
+    bool is_Valid(int i,int j,int n,int m,vector<vector<int>>&visited)
+    {
+        if(i<0||i>=n||j<0||j>=m||visited[i][j]==1)
+        return 0;
+        return 1;
+    }
+    int swimInWater(vector<vector<int>>& grid) {
+        priority_queue<pip,vector<pip>,greater<pip>>pq;
+        int dx[4]={-1,1,0,0};
+        int dy[4]={0,0,-1,1};
+        pq.push({grid[0][0],{0,0}});
+        int n=grid.size();
+        int m=grid[0].size();
+        vector<vector<int>>visited(n,vector<int>(m,0));
+        visited[0][0]=1;
+        int ans=INT_MIN;
+        while(pq.size()>0)
+        {
+           auto x3=pq.top();
+           pq.pop();
+           auto x1=x3.first;
+           auto x2=x3.second;
+           int x=x2.first;
+           int y=x2.second;
+           if(x==n-1&&y==n-1){
+               ans=max(ans,x1);
+           return ans;}
+           else
+           ans=max(ans,x1);
+           for(int i=0;i<4;i++)
+           {
+               if(is_Valid(x+dx[i],y+dy[i],n,m,visited))
+
+               {
+                 pq.push({grid[x+dx[i]][y+dy[i]],{x+dx[i],y+dy[i]}});
+                 visited[x+dx[i]][y+dy[i]]=1;
+               }
+           }
+
+
+        }
+        return ans;
+        
+    }
+};

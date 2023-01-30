@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+       vector<pair<int,int>>adj[n];
+       for(auto&it:flights)
+       {
+           adj[it[0]].push_back({it[1],it[2]});
+       }
+       queue<pair<int,pair<int,int>>>q;
+       q.push({0,{src,0}});
+       vector<int>dist(n,1e9);
+       dist[src]=0;
+       while(q.size()>0)
+       {
+           auto x=q.front();
+           q.pop();
+           int x1=x.first;
+           int x2=x.second.first;
+           int x3=x.second.second;
+           if(x1>k)
+           continue;
+           for(auto&it:adj[x2])
+           {
+               int x4=it.first;
+               int x5=it.second;
+               if(dist[x4]>x3+x5 && x1<=k)
+               {
+                   dist[x4]=x3+x5;
+                   q.push({x1+1,{x4,dist[x4]}});
+               }
+           }
+       }
+       if(dist[dst]==1e9)
+       return -1;
+       return dist[dst];
+
+    }
+};

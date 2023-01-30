@@ -1,0 +1,44 @@
+class Solution {
+public:
+typedef long long int ll;
+ll gcd(ll x1,ll x2)
+{
+    if(x1%x2==0)
+    return x2;
+    else
+    return gcd(x2,x1%x2);
+}
+ll lcm(ll x1,ll x2)
+{
+   ll g=gcd(max(x1,x2),min(x2,x1));
+   ll p=x1*x2;
+   ll l=p/g;
+   return l;
+}
+bool isValid(ll d1,ll d2,ll u1,ll u2,ll mid)
+{
+    ll a=mid-(mid/d1);
+    ll b=mid-(mid/d2);
+    ll c=mid-(mid/lcm(d1,d2));
+    return (a>=u1&&b>=u2&&c>=u1+u2);
+
+}
+    int minimizeSet(int d1, int d2, int u1, int u2) {
+     ll low=2;
+     ll high=1e10;
+     ll ans=0;
+     while(low<=high)
+     {
+         ll mid=(low+high)/2;
+         if(isValid(d1,d2,u1,u2,mid))
+         {
+           ans=mid;
+           high=mid-1;
+         }
+         else
+         low=mid+1;
+     }
+     return ans;
+        
+    }
+};

@@ -1,0 +1,38 @@
+class Solution {
+public:
+void f(int idx,int n,string s,int c,string str,vector<string>&ans)
+{
+    if(idx==n)
+    {
+        if(c==4)
+        {
+            str.pop_back();
+            ans.push_back(str);
+        }
+        return;
+    }
+    string temp="";
+    int num=0;
+    for(int i=idx;i<n;i++)
+    {
+        char ch=s[i];
+        num=num*10+(ch-'0');
+        temp+=ch;
+        if(temp.size()>1 && temp[0]=='0')
+        return;
+        if(num>=0&&num<=255)
+        f(i+1,n,s,c+1,str+temp+'.',ans);
+        else
+        return;
+    }
+}
+    vector<string> restoreIpAddresses(string s) {
+        vector<string>ans;
+        string str;
+        int n=s.length();
+        int c=0;
+        f(0,n,s,c,str,ans);
+        return ans;
+        
+    }
+};
